@@ -31,10 +31,13 @@ describe("A default slot", () => {
 	});
 });
 
-test.skip("named fillings should be discarded when no named slots defined", () => {
-});
+describe("Named slots", () => {
 
-test.skip("named slots should be filled with all corresponding named fillings discarding others fillings", () => {
+	test("should be filled with all corresponding named fillings", () => {
+	});
+
+	test("should not be filled with unnamed fillings or not corresponding named fillings", () => {
+	});
 });
 
 test.skip("slots without a filling should use Slot's children, if not a function, as default content", () => {
