@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom';
-import { render, screen } from '@testing-library/react';
 import Slot from './Slot';
 
 function renderDOM(jsx, tag = "div") {
@@ -52,6 +51,17 @@ describe("A default slot", () => {
 
 		expect(expected.innerHTML).toBe(actual.innerHTML);
 	});
+
+	test("should resolve fillings from non-array values as source of fillings", () => {
+		let actual = renderDOM(<>
+			<Component>Hello</Component>
+			<Component><b>world</b></Component>
+		</>);
+
+		let expected = renderDOM(<>Hello<b>world</b></>);
+
+		expect(expected.innerHTML).toBe(actual.innerHTML);
+	});
 });
 
 describe("Named slots", () => {
@@ -91,6 +101,7 @@ describe("Named slots", () => {
 				<span>Also not rendered</span>
 			</Component>
 		);
+
 		let expected = renderDOM(<h2>Article title</h2>);
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
@@ -104,9 +115,9 @@ describe("Named slots", () => {
 				<Component><b $title>Welcome</b></Component>
 			</>
 		);
-	
+
 		let expected = renderDOM(<b>Welcome</b>);
-	
+
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 });
