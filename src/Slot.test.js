@@ -57,6 +57,17 @@ describe("Named slots", () => {
 	});
 
 	test("should not be filled with unnamed fillings or not corresponding named fillings", () => {
+		render(
+			<Component>
+				<h2 $title>Article title</h2>
+				<span $wrong-slot-name>Not rendered</span>
+				<span>Also not rendered</span>
+			</Component>
+		);
+
+		screen.getByText("Article title", { selector: "h2" });
+		expect(screen.queryByText("Not rendered")).not.toBeInTheDocument();
+		expect(screen.queryByText("Also not rendered")).not.toBeInTheDocument();
 	});
 });
 
