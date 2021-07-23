@@ -1,5 +1,8 @@
 import ReactDOM from 'react-dom';
 import Slot from './Slot';
+import fireEvent from '@testing-library/user-event';
+import { forwardRef } from 'react';
+
 
 function renderDOM(jsx, tag = "div") {
 	let root = document.createElement(tag);
@@ -62,6 +65,30 @@ describe("A default slot", () => {
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
+
+
+	test("should resolve fillings maintaining its props and ref", () => {
+		let Welcome = forwardRef(({name, greet, ...props}, ref) => <h1 {...props} onClick={greet} ref={ref}>Welcome, {name}!</h1>)
+
+		let actualRef = { current: null }
+		let greet = jest.fn();
+
+		let actual = renderDOM(
+			<Component>
+				<Welcome className="welcome" name="Mateus" greet={greet} ref={actualRef}/>
+			</Component>
+		);
+
+		let expected = renderDOM(
+			<h1 className="welcome">Welcome, Mateus!</h1>
+		);
+
+		fireEvent.click(actual.firstChild, {});
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+		expect(greet).toHaveBeenCalledTimes(1);
+		expect(actualRef.current).toBe(actual.firstChild);
+	});
 });
 
 describe("Named slots", () => {
@@ -119,6 +146,29 @@ describe("Named slots", () => {
 		let expected = renderDOM(<b>Welcome</b>);
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+
+	test("should resolve fillings maintaining its props and ref", () => {
+		let Welcome = forwardRef(({name, greet, ...props}, ref) => <h1 {...props} onClick={greet} ref={ref}>Welcome, {name}!</h1>)
+
+		let actualRef = { current: null };
+		let greet = jest.fn();
+
+		let actual = renderDOM(
+			<Component>
+				<Welcome $title className="welcome" name="Mateus" greet={greet} ref={actualRef}/>
+			</Component>
+		);
+
+		let expected = renderDOM(
+			<h1 className="welcome">Welcome, Mateus!</h1>
+		);
+
+		fireEvent.click(actual.firstChild, {});
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+		expect(greet).toHaveBeenCalledTimes(1);
+		expect(actualRef.current).toBe(actual.firstChild);
 	});
 });
 
