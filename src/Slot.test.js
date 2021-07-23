@@ -79,3 +79,11 @@ describe("Named slots with not corresponding filling found", () => {
 });
 
 test.todo("Fillings should be placed in appropriate slot positions");
+
+test.todo("slots should treat react element as valid source of fillings");
+test.todo("slots should treat string as valid source of fillings");
+test.todo("slots should treat number as valid source of fillings");
+test.todo("slots should treat array as valid source of fillings");
+
+test.todo("fillings props should remain");
+test.todo("named slot default props should be passed to all fillings");
