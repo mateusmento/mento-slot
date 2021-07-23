@@ -37,6 +37,7 @@ describe("Named slots", () => {
 		<>
 			<Slot $name="title" $source={children}/>
 			<Slot $name="description" $source={children}/>
+			<Slot $name="tag" $source={children}/>
 		</>
 
 	test("should be filled with all corresponding named fillings", () => {
