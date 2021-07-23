@@ -229,4 +229,11 @@ describe("Named slots with no corresponding filling found", () => {
 		expect(actual).toBeEmptyDOMElement();
 	});
 
+	test("should render only default content if it is defined and $as prop not defined", () => {
+		let Component = ({children}) => <Slot $source={null}>Hello world</Slot>
+		let actual = renderDOM(<Component/>);
+		let expected = renderDOM("Hello world");
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+
 });
