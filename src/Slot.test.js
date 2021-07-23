@@ -27,15 +27,16 @@ describe("A default slot", () => {
 				<small $welcome>Welcome to our page</small>
 			</Component>
 		);
-	
+
 		screen.getByLabelText("Search");
 		screen.getByRole("textbox");
 	});
 });
 
+test.skip("named fillings should be discarded when no named slots defined", () => {
 });
 
-test.skip("named slots should be filled with all existing and corresponding named fillings", () => {
+test.skip("named slots should be filled with all corresponding named fillings discarding others fillings", () => {
 });
 
 test.skip("slots without a filling should use Slot's children, if not a function, as default content", () => {
