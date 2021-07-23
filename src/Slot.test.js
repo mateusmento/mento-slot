@@ -1,21 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import Slot from './Slot';
 
-test("default slot should be filled with all unnamed fillings", () => {
+describe("A default slot", () => {
+
 	let Component = ({children}) =>
 		<div>
 			<Slot $source={children}/>
 		</div>
 
-	render(
-		<Component>
-			<label htmlFor="search">Search</label>
-			<input id="search"/>
-		</Component>
-	);
-
-	screen.getByLabelText("Search");
-	screen.getByRole("textbox");
+	test("should be filled with unnamed fillings", () => {
+		render(
+			<Component>
+				<h1>Hello World</h1>
+				<small>Welcome to our page</small>
+			</Component>
+		);
+	
+		screen.getByText("Hello World", { selector: "h1"});
+		screen.getByText("Welcome to our page", { selected: "small" });
+	});
 });
 
 });
