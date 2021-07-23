@@ -1,6 +1,7 @@
-import { isValidElement } from "react";
+import { isValidElement, forwardRef, createElement, Children } from "react";
+import omit from "lodash.omit";
 
-function Slot(props) {
+function Slot(props, ref) {
 	let {
 		$name: name,
 		$source: source = null,
@@ -9,10 +10,11 @@ function Slot(props) {
 
 	source = source instanceof Array ? source : [source];
 
-	if (name)
-		return renderAsNamedSlot(name, source);
+	let result = name
+		? renderAsNamedSlot(name, source)
+		: renderAsDefaultSlot(source);
 
-	return renderAsDefaultSlot(source);
+	return Children.toArray(result);
 }
 
 function renderAsDefaultSlot(fillings) {
@@ -20,7 +22,15 @@ function renderAsDefaultSlot(fillings) {
 }
 
 function renderAsNamedSlot(name, fillings) {
-	return fillings.filter(f => isValidElement(f) && Object.keys(f.props).some(k => k === "$" + name));
+	return fillings.filter(f => isValidElement(f) && Object.keys(f.props).some(k => k === "$" + name))
+		.map(f => cloneFilling(f, name));
 }
 
-export default Slot;
+function cloneFilling({type, props, ref, key}, name) {
+	props = omit(props, `$${name}`);
+	if (key) props.key = key;
+	if (ref) props.ref = ref;
+	return createElement(type, props);
+}
+
+export default forwardRef(Slot);
