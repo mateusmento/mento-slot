@@ -13,28 +13,32 @@ describe("A default slot", () => {
 	let Component = ({children}) => <Slot $source={children}/>
 
 	test("should be filled with unnamed fillings", () => {
-		let { container } = render(
+		let actual = renderDOM(
 			<Component>
 				<h1>Hello World</h1>
 				<small>Welcome to our page</small>
 			</Component>
 		);
 
-		screen.getByText("Hello World", { selector: "h1"});
-		screen.getByText("Welcome to our page", { selected: "small" });
-		expect(container.childNodes).toHaveLength(2);
+		let expected = renderDOM(<>
+			<h1>Hello World</h1>
+			<small>Welcome to our page</small>
+		</>);
+
+		expect(expected.innerHTML).toBe(actual.innerHTML);
 	});
 
 	test("should not be filled with named slots", () => {
-		let { container } = render(
+		let actual = renderDOM(
 			<Component>
 				<h1>Hello World</h1>
 				<small $welcome>Welcome to our page</small>
 			</Component>
 		);
 
-		screen.getByText("Hello World", { selector: "h1"});
-		expect(container.childNodes).toHaveLength(1);
+		let expected = renderDOM(<h1>Hello World</h1>);
+
+		expect(expected.innerHTML).toBe(actual.innerHTML);
 	});
 });
 
