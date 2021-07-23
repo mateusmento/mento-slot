@@ -1,3 +1,5 @@
+import { isValidElement } from "react";
+
 function Slot(props) {
 	let {
 		$name: name,
@@ -14,7 +16,7 @@ function Slot(props) {
 }
 
 function renderAsDefaultSlot(fillings) {
-	return fillings.filter(f => !Object.keys(f.props).some(k => k.startsWith("$")));
+	return fillings.filter(f => !isValidElement(f) || !Object.keys(f.props).some(k => k.startsWith("$")));
 }
 
 function renderAsNamedSlot(name, fillings) {
