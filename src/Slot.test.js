@@ -6,15 +6,16 @@ describe("A default slot", () => {
 	let Component = ({children}) => <Slot $source={children}/>
 
 	test("should be filled with unnamed fillings", () => {
-		render(
+		let { container } = render(
 			<Component>
 				<h1>Hello World</h1>
 				<small>Welcome to our page</small>
 			</Component>
 		);
-	
+
 		screen.getByText("Hello World", { selector: "h1"});
 		screen.getByText("Welcome to our page", { selected: "small" });
+		expect(container.childNodes).toHaveLength(2);
 	});
 
 	test("should not be filled with named slots", () => {
