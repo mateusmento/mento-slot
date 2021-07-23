@@ -1,7 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import Slot from './Slot';
 
-test.skip("default slot should be filled with all unnamed fillings", () => {
+test("default slot should be filled with all unnamed fillings", () => {
+	let Component = ({children}) =>
+		<div>
+			<Slot $source={children}/>
+		</div>
+
+	render(
+		<Component>
+			<label htmlFor="search">Search</label>
+			<input id="search"/>
+		</Component>
+	);
+
+	screen.getByLabelText("Search");
+	screen.getByRole("textbox");
+});
+
 });
 
 test.skip("named slots should be filled with all existing and corresponding named fillings", () => {
