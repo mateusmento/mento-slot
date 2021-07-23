@@ -193,6 +193,33 @@ describe("Named slots", () => {
 	test.todo("should have default props passed to all fillings");
 });
 
+test("Fillings should be placed in appropriate slot positions", () => {
+	let Component = ({children}) =>
+		<>
+			<Slot $name="title" $source={children}/>
+			<Slot $name="description" $source={children}/>
+			<Slot $source={children}/>
+		</>
+
+	let actual = renderDOM(
+		<Component>
+			<button>Get started</button>
+			<small $description>Welcome to our page</small>
+			<a href="#">Documentation</a>
+			<h1 $title>Hello world</h1>
+		</Component>
+	);
+
+	let expected = renderDOM(<>
+		<h1>Hello world</h1>
+		<small>Welcome to our page</small>
+		<button>Get started</button>
+		<a href="#">Documentation</a>
+	</>);
+
+	expect(actual.innerHTML).toBe(expected.innerHTML);
+});
+
 describe("Named slots with not corresponding filling found", () => {
 	test.todo("should render nothing if default content and $as prop are not defined");
 	test.todo("should render only default content if it is defined and $as prop not defined");
