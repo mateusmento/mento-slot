@@ -46,6 +46,8 @@ describe("Named slots", () => {
 	});
 });
 
+test.todo("Fillings should be placed in appropriate slot positions");
+
 test.skip("slots without a filling should use Slot's children, if not a function, as default content", () => {
 });
 
