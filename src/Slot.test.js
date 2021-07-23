@@ -47,10 +47,11 @@ describe("Named slots", () => {
 	});
 });
 
+describe("Named slots with not corresponding filling found", () => {
+	test.todo("should render nothing if default content and $as prop are not defined");
+	test.todo("should render only default content if it is defined and $as prop not defined");
+	test.todo("should render a empty element base on $as prop if it defined and default content not defined")
+	test.todo("should render a wrapper element base on $as prop containing default content if both are defined");
+});
+
 test.todo("Fillings should be placed in appropriate slot positions");
-
-test.skip("slots without a filling should use Slot's children, if not a function, as default content", () => {
-});
-
-test.skip("named slots without a filling and with $as prop defined should use the prop as tag of the root element wrapping default content", () => {
-});
