@@ -189,6 +189,8 @@ describe("Named slots", () => {
 		for (let {props} of result)
 			expect(props).not.toHaveProperty("$input");
 	});
+
+	test.todo("should have default props passed to all fillings");
 });
 
 describe("Named slots with not corresponding filling found", () => {
