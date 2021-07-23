@@ -33,6 +33,12 @@ describe("A default slot", () => {
 
 describe("Named slots", () => {
 
+	let Component = ({children}) =>
+		<>
+			<Slot $name="title" $source={children}/>
+			<Slot $name="description" $source={children}/>
+		</>
+
 	test("should be filled with all corresponding named fillings", () => {
 	});
 
