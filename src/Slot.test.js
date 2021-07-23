@@ -19,6 +19,18 @@ describe("A default slot", () => {
 		screen.getByText("Hello World", { selector: "h1"});
 		screen.getByText("Welcome to our page", { selected: "small" });
 	});
+
+	test("should not be filled with named slots", () => {
+		render(
+			<Component>
+				<h1>Hello World</h1>
+				<small $welcome>Welcome to our page</small>
+			</Component>
+		);
+	
+		screen.getByLabelText("Search");
+		screen.getByRole("textbox");
+	});
 });
 
 });
