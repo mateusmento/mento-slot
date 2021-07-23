@@ -220,9 +220,13 @@ test("Fillings should be placed in appropriate slot positions", () => {
 	expect(actual.innerHTML).toBe(expected.innerHTML);
 });
 
-describe("Named slots with not corresponding filling found", () => {
-	test.todo("should render nothing if default content and $as prop are not defined");
-	test.todo("should render only default content if it is defined and $as prop not defined");
-	test.todo("should render a empty element base on $as prop if it defined and default content not defined")
-	test.todo("should render a wrapper element base on $as prop containing default content if both are defined");
+describe("Named slots with no corresponding filling found", () => {
+
+	test("should render nothing if default content and $as prop are not defined", () => {
+		let Component = ({children}) => <Slot $as="button" $source={null}/>
+		let actual = renderDOM(<Component/>);
+		let expected = renderDOM(<button/>);
+		expect(actual).toBeEmptyDOMElement();
+	});
+
 });
