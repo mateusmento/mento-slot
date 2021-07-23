@@ -35,10 +35,14 @@ describe("A default slot", () => {
 			<Component>
 				<h1>Hello World</h1>
 				<small $welcome>Welcome to our page</small>
+				<a href="#">Start here</a>
 			</Component>
 		);
 
-		let expected = renderDOM(<h1>Hello World</h1>);
+		let expected = renderDOM(<>
+			<h1>Hello World</h1>
+			<a href="#">Start here</a>
+		</>);
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
