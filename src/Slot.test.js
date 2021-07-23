@@ -3,10 +3,7 @@ import Slot from './Slot';
 
 describe("A default slot", () => {
 
-	let Component = ({children}) =>
-		<div>
-			<Slot $source={children}/>
-		</div>
+	let Component = ({children}) => <Slot $source={children}/>
 
 	test("should be filled with unnamed fillings", () => {
 		render(
