@@ -4,7 +4,7 @@ function Slot(props) {
 		...defaultProps
 	} = props;
 
-	return source;
+	return source.filter(s => !Object.keys(s.props).some(k => k.startsWith("$")));
 }
 
 export default Slot;
