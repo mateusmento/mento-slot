@@ -18,15 +18,15 @@ describe("A default slot", () => {
 	});
 
 	test("should not be filled with named slots", () => {
-		render(
+		let { container } = render(
 			<Component>
 				<h1>Hello World</h1>
 				<small $welcome>Welcome to our page</small>
 			</Component>
 		);
 
-		screen.getByLabelText("Search");
-		screen.getByRole("textbox");
+		screen.getByText("Hello World", { selector: "h1"});
+		expect(container.childNodes).toHaveLength(1);
 	});
 });
 
