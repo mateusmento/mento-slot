@@ -226,7 +226,3 @@ describe("Named slots with not corresponding filling found", () => {
 	test.todo("should render a empty element base on $as prop if it defined and default content not defined")
 	test.todo("should render a wrapper element base on $as prop containing default content if both are defined");
 });
-
-test.todo("Fillings should be placed in appropriate slot positions");
-
-test.todo("named slot default props should be passed to all fillings");
