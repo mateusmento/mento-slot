@@ -1,5 +1,12 @@
+import ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import Slot from './Slot';
+
+function renderDOM(jsx, tag = "div") {
+	let root = document.createElement(tag);
+	ReactDOM.render(jsx, root);
+	return root;
+}
 
 describe("A default slot", () => {
 
