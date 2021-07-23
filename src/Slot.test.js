@@ -60,7 +60,7 @@ describe("A default slot", () => {
 
 		let expected = renderDOM(<>Hello<b>world</b></>);
 
-		expect(expected.innerHTML).toBe(actual.innerHTML);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 });
 
