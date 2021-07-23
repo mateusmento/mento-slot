@@ -5,6 +5,8 @@ function Slot(props) {
 		...defaultProps
 	} = props;
 
+	source = source instanceof Array ? source : [source];
+
 	if (name)
 		return renderAsNamedSlot(name, source);
 
