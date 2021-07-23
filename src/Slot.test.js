@@ -40,30 +40,37 @@ describe("Named slots", () => {
 			<Slot $name="tag" $source={children}/>
 		</>
 
-	let element = (
-		<Component>
-			<h2 $title>Article title</h2>
-			<h4 $description>Article description</h4>
-			<span $tag className="tag">news</span>
-			<span $tag className="tag">today</span>
-			<span $tag className="tag">good news</span>
-			<span $wrong-slot-name>Not rendered</span>
-			<span>Also not rendered</span>
-		</Component>
-	);
+	test("should be filled all corresponding named fillings", () => {
+		let actual = renderDOM(
+			<Component>
+				<h2 $title>Article title</h2>
+				<h4 $description>Article description</h4>
+				<span $tag className="tag">news</span>
+				<span $tag className="tag">today</span>
+			</Component>
+		);
 
-	test("should be filled with all corresponding named fillings", () => {
-		let { container } = render(element);
-		screen.getByText("Article title", { selector: "h2" });
-		screen.getByText("Article description", { selector: "h4"});
-		expect(container.querySelectorAll("span.tag")).toHaveLength(3);
+		let expected = renderDOM(<>
+			<h2>Article title</h2>
+			<h4>Article description</h4>
+			<span className="tag">news</span>
+			<span className="tag">today</span>
+		</>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
 	test("should not be filled with unnamed fillings or not corresponding named fillings", () => {
-		render(element);
-		screen.getByText("Article title", { selector: "h2" });
-		expect(screen.queryByText("Not rendered")).not.toBeInTheDocument();
-		expect(screen.queryByText("Also not rendered")).not.toBeInTheDocument();
+		let actual = renderDOM(
+			<Component>
+				<h2 $title>Article title</h2>
+				<span $wrong-slot-name>Not rendered</span>
+				<span>Also not rendered</span>
+			</Component>
+		);
+		let expected = renderDOM(<h2>Article title</h2>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 });
 
