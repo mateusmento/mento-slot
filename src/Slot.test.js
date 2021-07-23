@@ -79,6 +79,20 @@ describe("Named slots", () => {
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
+
+	test("should only treat react elements as fillings", () => {
+		let actual = renderDOM(
+			<>
+				<Component>{"Hello world"}</Component>
+				<Component>{12}</Component>
+				<Component><b $title>Welcome</b></Component>
+			</>
+		);
+	
+		let expected = renderDOM(<b>Welcome</b>);
+	
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
 });
 
 describe("Named slots with not corresponding filling found", () => {
