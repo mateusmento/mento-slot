@@ -170,6 +170,21 @@ describe("Named slots", () => {
 		expect(greet).toHaveBeenCalledTimes(1);
 		expect(actualRef.current).toBe(actual.firstChild);
 	});
+
+	test("should have its name removed from resolved fillings", () => {
+		let children = (<>
+			<textarea $input $editor></textarea>
+			<button></button>
+			<input $input/>
+		</>).props.children;
+
+		let result = Slot.render({$name: "input", $source: children}, null);
+
+		expect(result).toHaveLength(2);
+
+		for (let {props} of result)
+			expect(props).not.toHaveProperty("$input");
+	});
 });
 
 describe("Named slots with not corresponding filling found", () => {
