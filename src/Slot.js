@@ -20,7 +20,7 @@ function renderAsDefaultSlot(fillings) {
 }
 
 function renderAsNamedSlot(name, fillings) {
-	return fillings.filter(f => Object.keys(f.props).some(k => k === "$" + name));
+	return fillings.filter(f => isValidElement(f) && Object.keys(f.props).some(k => k === "$" + name));
 }
 
 export default Slot;
