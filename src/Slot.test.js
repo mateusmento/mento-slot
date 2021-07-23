@@ -41,6 +41,19 @@ describe("Named slots", () => {
 		</>
 
 	test("should be filled with all corresponding named fillings", () => {
+		render(
+			<Component>
+				<h2 $title>Article title</h2>
+				<h4 $description>Article description</h4>
+				<span $tag data-testid="tag">news</span>
+				<span $tag data-testid="tag">today</span>
+				<span $tag data-testid="tag">good news</span>
+			</Component>
+		);
+
+		screen.getByText("Article title", { selector: "h2" });
+		screen.getByText("Article description", { selector: "h4"});
+		screen.getAllByTestId("tag");
 	});
 
 	test("should not be filled with unnamed fillings or not corresponding named fillings", () => {
