@@ -24,7 +24,7 @@ describe("A default slot", () => {
 			<small>Welcome to our page</small>
 		</>);
 
-		expect(expected.innerHTML).toBe(actual.innerHTML);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
 	test("should not be filled with named slots", () => {
@@ -37,7 +37,7 @@ describe("A default slot", () => {
 
 		let expected = renderDOM(<h1>Hello World</h1>);
 
-		expect(expected.innerHTML).toBe(actual.innerHTML);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
 	test("should resolve any value besides react elements as filling", () => {
@@ -49,7 +49,7 @@ describe("A default slot", () => {
 
 		let expected = renderDOM(<>Hello <b>world</b> 1 23</>);
 
-		expect(expected.innerHTML).toBe(actual.innerHTML);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
 	test("should resolve fillings from non-array values as source of fillings", () => {
