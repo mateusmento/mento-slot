@@ -40,6 +40,18 @@ describe("A default slot", () => {
 
 		expect(expected.innerHTML).toBe(actual.innerHTML);
 	});
+
+	test("should resolve any value besides react elements as filling", () => {
+		let actual = renderDOM(
+			<Component>
+				{"Hello"} <b>world</b> {1} {[2, "3"]}{true}{null}
+			</Component>
+		);
+
+		let expected = renderDOM(<>Hello <b>world</b> 1 23</>);
+
+		expect(expected.innerHTML).toBe(actual.innerHTML);
+	});
 });
 
 describe("Named slots", () => {
