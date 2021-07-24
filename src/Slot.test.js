@@ -220,20 +220,32 @@ test("Fillings should be placed in appropriate slot positions", () => {
 	expect(actual.innerHTML).toBe(expected.innerHTML);
 });
 
-describe("Named slots with no corresponding filling found", () => {
+describe("Slots with no corresponding filling found", () => {
 
 	test("should render nothing if default content and $as prop are not defined", () => {
-		let Component = ({children}) => <Slot $as="button" $source={null}/>
+		let Component = ({children}) => <Slot $source={children}/>
 		let actual = renderDOM(<Component/>);
-		let expected = renderDOM(<button/>);
 		expect(actual).toBeEmptyDOMElement();
 	});
 
 	test("should render only default content if it is defined and $as prop not defined", () => {
-		let Component = ({children}) => <Slot $source={null}>Hello world</Slot>
+		let Component = ({children}) => <Slot $source={children}>Hello world</Slot>
 		let actual = renderDOM(<Component/>);
 		let expected = renderDOM("Hello world");
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
+	test("should render a empty element base on $as prop if it is defined and default content not defined", () => {
+		let Component = ({children}) => <Slot $as="button" $source={children}/>
+		let actual = renderDOM(<Component/>);
+		let expected = renderDOM(<button/>);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+
+	test("should render a wrapper element base on $as prop containing default content if both are defined", () => {
+		let Component = ({children}) => <Slot $as="button" $source={children}>Hello world</Slot>
+		let actual = renderDOM(<Component/>);
+		let expected = renderDOM(<button>Hello world</button>);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
 });
