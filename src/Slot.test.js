@@ -190,7 +190,19 @@ describe("Named slots", () => {
 			expect(props).not.toHaveProperty("$input");
 	});
 
-	test.todo("should have default props passed to all fillings");
+	test("should have default props passed to all fillings", () => {
+		let Component = ({children}) => <Slot $name="title" $source={children} className="title"/>
+
+		let actual = renderDOM(
+			<Component>
+				<h3 $title id="title">Hello world</h3>
+			</Component>
+		);
+
+		let expected = renderDOM(<h3 className="title" id="title">Hello world</h3>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
 });
 
 test("Fillings should be placed in appropriate slot positions", () => {
@@ -246,6 +258,13 @@ describe("Slots with no corresponding filling found", () => {
 		let Component = ({children}) => <Slot $as="button" $source={children}>Hello world</Slot>
 		let actual = renderDOM(<Component/>);
 		let expected = renderDOM(<button>Hello world</button>);
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+
+	test("should render a wrapper element base on defined $as prop containing slot all default props", () => {
+		let Component = ({children}) => <Slot $as="button" $source={children} className="welcome">Hello world</Slot>
+		let actual = renderDOM(<Component/>);
+		let expected = renderDOM(<button className="welcome">Hello world</button>);
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 });
