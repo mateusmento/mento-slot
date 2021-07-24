@@ -4,7 +4,9 @@ import omit from "lodash.omit";
 function Slot(props, ref) {
 	let {
 		$name: name,
-		$source: source = null,
+		$source: source = [],
+		$as: as,
+		children: defaultContent = null,
 		...defaultProps
 	} = props;
 
@@ -14,7 +16,15 @@ function Slot(props, ref) {
 		? renderAsNamedSlot(name, source)
 		: renderAsDefaultSlot(source);
 
+	if (result.length === 0)
+		return renderDefaultContent(as, defaultProps, defaultContent);
+
 	return Children.toArray(result);
+}
+
+function renderDefaultContent(type, props, children) {
+	if (!type) return children;
+	return createElement(type, props, children);
 }
 
 function renderAsDefaultSlot(fillings) {
