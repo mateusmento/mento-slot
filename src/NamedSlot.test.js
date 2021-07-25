@@ -118,4 +118,24 @@ describe("Named slots", () => {
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
 
+
+	test("should resolve array fillings as source of fillings", () => {
+		let Componet = ({children}) => <Slot $name="item" $source={children}/>
+
+		let actual = renderDOM(
+			<Component>
+				{[1, 2].map(n => <div $item key={n}>{n}</div>)}
+				{[1, 2].map(n => <span $item key={n}>{n}</span>)}
+			</Component>
+		);
+
+		let expected = renderDOM(<>
+			<div>1</div>
+			<div>2</div>
+			<span>1</span>
+			<span>2</span>
+		</>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
 });
