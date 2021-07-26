@@ -34,6 +34,38 @@ test("Fillings should be placed in appropriate slot positions", () => {
 	expect(actual.innerHTML).toBe(expected.innerHTML);
 });
 
+describe("Slots", () => {
+	test("should resolve array fillings as source of fillings", () => {
+		let Component = ({children}) => <>
+			<Slot $source={children}/>
+			<Slot $name="item" $source={children}/>
+		</>
+
+		let actual = renderDOM(
+			<Component>
+				{[1, 2].map(n => <div $item key={n}>{n}</div>)}
+				<h1>Hello world</h1>
+				{
+					[
+						<h2 key={1}>Welcome</h2>,
+						[1, 2].map(n => <span $item key={n}>{n}</span>)
+					]
+				}
+			</Component>
+		);
+
+		let expected = renderDOM(<>
+			<h1>Hello world</h1>
+			<h2 key={1}>Welcome</h2>
+			{[1, 2].map(n => <div key={n}>{n}</div>)}
+			{[1, 2].map(n => <span key={n}>{n}</span>)}
+		</>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+});
+
+
 describe("Slots with no corresponding filling found", () => {
 
 	test("should render nothing if default content and $as prop are not defined", () => {
