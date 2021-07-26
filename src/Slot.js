@@ -10,7 +10,7 @@ function Slot(props, ref) {
 		...defaultProps
 	} = props;
 
-	source = source instanceof Array ? source : [source];
+	source = Children.toArray(source);
 
 	let result = name
 		? renderAsNamedSlot(name, source, defaultProps)
