@@ -32,7 +32,7 @@ function renderAsDefaultSlot(fillings) {
 }
 
 function renderAsNamedSlot(name, fillings, defaultProps) {
-	return fillings.filter(f => isValidElement(f) && Object.keys(f.props).some(k => k === "$" + name))
+	return fillings.filter(f => isValidElement(f) && `$${name}` in f.props)
 		.map(f => cloneFilling(f, name, defaultProps));
 }
 
