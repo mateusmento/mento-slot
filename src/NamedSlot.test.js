@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import Slot from './Slot';
 import fireEvent from '@testing-library/user-event';
 import { forwardRef } from 'react';
+import NamedSlot from './NamedSlot';
 
 function renderDOM(jsx, tag = "div") {
 	let root = document.createElement(tag);
@@ -117,4 +118,47 @@ describe("Named slots", () => {
 
 		expect(actual.innerHTML).toBe(expected.innerHTML);
 	});
+
+	test("named slot, $as, default props", () => {
+		let Welcome = ({name, greet, ...props}) => <h1 {...props} onClick={greet}>Welcome, {name}!</h1>
+
+		let Component = ({children}) => <Slot $name="greeting" $as={Welcome} name="Mateus" $source={children}/>
+
+		let actual = renderDOM(
+			<Component>
+				<Welcome $greeting className="welcome"/>
+			</Component>
+		);
+
+		let expected = renderDOM(<h1 className="welcome">Welcome, Mateus!</h1>);
+
+		expect(actual.innerHTML).toBe(expected.innerHTML);
+	});
+});
+
+
+test("should render named slot", () => {
+
+	let Component = ({children}) => <>
+		<NamedSlot $name="welcome" $type="h1" $source={children} className="welcome">Hello world</NamedSlot>
+		<NamedSlot $name="item" $source={children} className="item">
+			{(props, {children}) => <li {...props}>{children}</li>}
+		</NamedSlot>
+	</>
+
+	let actual = renderDOM(
+		<Component>
+			<h1 $welcome/>
+			<li $item>Item 1</li>
+			<li $item>Item 2</li>
+		</Component>
+	);
+
+	let expected = renderDOM(<>
+			<h1 className="welcome">Hello world</h1>
+			<li className="item">Item 1</li>
+			<li className="item">Item 2</li>
+	</>);
+
+	expect(actual.innerHTML).toBe(expected.innerHTML);
 });
