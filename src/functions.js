@@ -1,20 +1,5 @@
 export let callable = (value) => value instanceof Function ? value : () => value;
 
-export function classNames(...classNames) {
-
-	let resolveObjectEntries = (classNames) => Object.entries(classNames)
-		.filter(([className, accepted]) => accepted && className)
-		.map(([className]) => className)
-		.join(" ");
-
-	let result = classNames
-		.map(className => className instanceof Object ? resolveObjectEntries(className) : className)
-		.filter(className => className)
-		.join(" ");
-
-	return result;
-}
-
 export let mergeClassNames = (a = '', b = '') => [a || '', b || ''].join(' ').trim();
 
 export let mergeProps = (left, right) => {
@@ -31,10 +16,10 @@ export let mergeProps = (left, right) => {
 
 	for (let [name, handler] of events)
 		if (right[name] instanceof Function)
-			props[name] = mergeEvent(handler, right[name]);
+			props[name] = mergeCallback(handler, right[name]);
 
 	let children = left.children || right.children;
-	if (children) props.children = children;
+	if (children !== undefined) props.children = children;
 
 	return props;
 }
@@ -51,7 +36,7 @@ export let mergeRef = (...refs) => (el) => el && refs.forEach(ref => {
 	else if (ref instanceof Object) ref.current = el;
 })
 
-export let mergeEvent = (a, b) => {
+export let mergeCallback = (a, b) => {
 	return (...args) => {
 		a && a(...args);
 		b && b(...args);
